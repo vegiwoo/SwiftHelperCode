@@ -8,7 +8,7 @@ import UIKit
 
 public struct DeviceInformer {
     
-    //public init() {}
+    public init() {}
 
     // MARK: Public functions
     /// Provides information about disk space on current device.
