@@ -11,6 +11,7 @@ public class SHCErrors {
     
     enum DeviceInformerError : Error {
         case unableToCalculateDiskSpace
+        case requestIsAvailableOnlyForDevicesSupportingIOS
     }
 }
 
@@ -28,6 +29,8 @@ extension SHCErrors.DeviceInformerError : LocalizedError {
         switch self {
         case .unableToCalculateDiskSpace:
             return "Unable to determine the disk space status of current device."
+        case .requestIsAvailableOnlyForDevicesSupportingIOS:
+            return "The request is available only for devices supporting IOS."
         }
     }
 }
