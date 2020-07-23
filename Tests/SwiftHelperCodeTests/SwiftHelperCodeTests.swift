@@ -4,6 +4,7 @@ import XCTest
 final class SwiftHelperCodeTests: XCTestCase {
     
     func testDiskSpacing() {
+        #if !os(macOS)
         do {
             // Get total disk space in bytes directly
             let totalDiskSpaceInBytes = try FileManager.default.attributesOfFileSystem(forPath: NSHomeDirectory())[FileAttributeKey.systemSize] as? Int64
@@ -20,7 +21,7 @@ final class SwiftHelperCodeTests: XCTestCase {
         } catch {
             XCTAssertThrowsError(error.localizedDescription)
         }
-        
+        #endif  
     }
 
     static var allTests = [

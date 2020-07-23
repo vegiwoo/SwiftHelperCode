@@ -4,10 +4,11 @@
 //
 
 import Foundation
-#if os(iOS)
+#if !os(macOS)
 import UIKit
 #endif
 
+#if !os(macOS)
 extension UIDevice {
 
     /// Formats value according to suggested conditions.
@@ -138,5 +139,6 @@ extension UIDevice {
         return mapToDevice(identifier: identifier)
     }
 }
+#endif
 
 
