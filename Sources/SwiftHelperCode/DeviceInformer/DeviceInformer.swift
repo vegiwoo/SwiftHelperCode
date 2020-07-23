@@ -83,7 +83,18 @@ public struct DeviceInformer {
         throw SHCErrors.DeviceInformerError.requestIsAvailableOnlyForDevicesSupportingIOS
         #endif
     }
-
+    
+    /// Defines software type and version of current device.
+    /// - Throws: Error of type DeviceInformerError.
+    /// - Returns: Software type and version as a tuple of strings.
+    public func deviceSystemAndVersion() throws -> (system: String, version: String) {
+        #if os(iOS)
+        return (UIDevice.current.systemName, UIDevice.current.systemVersion)
+        #else
+        throw SHCErrors.DeviceInformerError.requestIsAvailableOnlyForDevicesSupportingIOS
+        #endif
+    }
+    
     // MARK: Private functions
     /// Formats value according to suggested conditions.
     /// - Parameters:
