@@ -77,8 +77,7 @@ public struct DeviceInformer {
         @unknown default:
             batteryState = "Unknown"
         }
-
-        return (batteryState, "\(String(format: "%.2",  UIDevice.current.batteryLevel)) %")
+        return (batteryState, "\(String(format: "%.2f",  UIDevice.current.batteryLevel)) %")
         #else
         throw SHCErrors.DeviceInformerError.requestIsAvailableOnlyForDevicesSupportingIOS
         #endif
