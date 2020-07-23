@@ -6,6 +6,7 @@ import Foundation
 import UIKit
 #endif
 
+/// Provides information about the current state of device.
 public struct DeviceInformer {
     
     public init() {}
@@ -77,7 +78,7 @@ public struct DeviceInformer {
         @unknown default:
             batteryState = "Unknown"
         }
-        return (batteryState, "\(String(format: "%.2f",  UIDevice.current.batteryLevel)) %")
+        return (batteryState, "\(String(format: "%.2f",  UIDevice.current.batteryLevel))")
         #else
         throw SHCErrors.DeviceInformerError.requestIsAvailableOnlyForDevicesSupportingIOS
         #endif

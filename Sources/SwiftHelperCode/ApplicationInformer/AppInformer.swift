@@ -5,7 +5,8 @@
 
 import Foundation
 
-public class AppInformer {
+/// Provides information about the application.
+public struct AppInformer {
     
     public init() {}
     
