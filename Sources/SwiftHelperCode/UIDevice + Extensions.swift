@@ -8,7 +8,6 @@ import Foundation
 import UIKit
 #endif
 
-
 extension UIDevice {
 
     /// Formats value according to suggested conditions.
@@ -140,10 +139,4 @@ extension UIDevice {
     }
 }
 
-/// Unit of information.
-enum UnitInformation: Int8, CaseIterable {
-    case byte
-    case kbyte
-    case mbyte
-    case gbyte
-}
+
