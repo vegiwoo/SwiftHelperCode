@@ -4,11 +4,11 @@
 //
 
 import Foundation
-#if !os(macOS)
+#if os(iOS)
 import UIKit
 #endif
 
-#if !os(macOS)
+#if os(iOS)
 extension UIDevice {
 
     /// Formats value according to suggested conditions.
