@@ -44,7 +44,7 @@ extension UIDevice {
     ///   - numbOfDecimalPlaces: Number of decimal places for output values.
     /// - Throws: If it is not possible to determine disk space, it may throw exceptions.
     /// - Returns: Returns total / free / used amount of disk space.
-    func diskSpacing(unit: UnitInformation, numbOfDecimalPlaces: Int) throws -> (total: String, free: String, used: String) {
+    public func diskSpacing(unit: UnitInformation, numbOfDecimalPlaces: Int) throws -> (total: String, free: String, used: String) {
         guard
             let totalDiskSpaceInBytes = try FileManager.default.attributesOfFileSystem(forPath: NSHomeDirectory())[FileAttributeKey.systemSize] as? Int64,
             let totalDiskFreeSpaceInBytes = try FileManager.default.attributesOfFileSystem(forPath: NSHomeDirectory())[FileAttributeKey.systemFreeSize] as? Int64
@@ -61,7 +61,7 @@ extension UIDevice {
 
     /// Provides model name of current device.
     /// - Returns: Device model name as string.
-    func modelName() -> String {
+    public func modelName() -> String {
         var systemInfo = utsname()
         uname(&systemInfo)
         let machineMirror = Mirror(reflecting: systemInfo.machine)

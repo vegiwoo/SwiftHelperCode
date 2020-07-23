@@ -6,7 +6,7 @@
 import Foundation
 
 /// Unit of information.
-enum UnitInformation: Int8, CaseIterable {
+public enum UnitInformation: Int8, CaseIterable {
     case byte
     case kbyte
     case mbyte
