@@ -4,6 +4,8 @@
 import Foundation
 
 public class DeviceInformer {
+    
+    public init() {}
 
     // MARK: Public functions
     /// Provides information about disk space on current device.

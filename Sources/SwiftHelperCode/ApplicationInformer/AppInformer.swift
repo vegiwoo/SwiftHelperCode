@@ -7,6 +7,8 @@ import Foundation
 
 public class AppInformer {
     
+    public init() {}
+    
     /// Determines the current version number and the current app build number.
     /// - Throws: Error of type ApplicationInformerError.
     /// - Returns: Version and build information tuple.
