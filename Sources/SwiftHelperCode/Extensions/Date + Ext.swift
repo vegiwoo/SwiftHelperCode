@@ -3,19 +3,7 @@
 
 import Foundation
 
-extension ISO8601DateFormatter {
-    convenience init(_ formatOptions: Options, timeZone: TimeZone = TimeZone(secondsFromGMT: 0)!) {
-        self.init()
-        self.formatOptions = formatOptions
-        self.timeZone = timeZone
-    }
-}
-
-extension Formatter {
-    static let iso8601 = ISO8601DateFormatter([.withInternetDateTime, .withFractionalSeconds])
-}
-
-extension Date {
+public extension Date {
 
     /// Get date from string.
     /// - Parameters:
@@ -73,13 +61,9 @@ extension Date {
         let components = calendar.dateComponents([.year], from: startDate, to: endDate)
         return components.year!
     }
-    
-    var iso8601: String {
-        return Formatter.iso8601.string(from: self)
-    }
 }
 
-enum DateTimeFormats : Int, CaseIterable {
+public enum DateTimeFormats : Int, CaseIterable {
     
     // https://ru.wikipedia.org/wiki/ISO_8601
     // https://nsdateformatter.com
