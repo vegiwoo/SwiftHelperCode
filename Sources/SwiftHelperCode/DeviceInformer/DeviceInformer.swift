@@ -6,6 +6,7 @@ import Foundation
 import UIKit
 #endif
 
+#if os(iOS)
 /// Provides information about the current state of device.
 public struct DeviceInformer {
     
@@ -219,3 +220,4 @@ public struct DeviceInformer {
     }
 
 }
+#endif
