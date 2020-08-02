@@ -1,7 +1,5 @@
-//
 //  ApplicationInformer.swift
 //  Created by Dmitry Samartcev on 23.07.2020.
-//
 
 import Foundation
 
