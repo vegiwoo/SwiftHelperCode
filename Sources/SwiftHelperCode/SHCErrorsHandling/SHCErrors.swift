@@ -13,6 +13,11 @@ public class SHCErrors {
         case unableToCalculateDiskSpace
         case requestIsAvailableOnlyForDevicesSupportingIOS
     }
+    
+    enum RegexError : Error {
+        case notPossibleCreateRegexFromGivenPattern(pattern: String)
+        
+    }
 }
 
 extension SHCErrors.ApplicationInformerError : LocalizedError {
@@ -31,6 +36,15 @@ extension SHCErrors.DeviceInformerError : LocalizedError {
             return "Unable to determine the disk space status of current device."
         case .requestIsAvailableOnlyForDevicesSupportingIOS:
             return "The request is available only for devices supporting IOS."
+        }
+    }
+}
+
+extension SHCErrors.RegexError : LocalizedError {
+    var errorDescription: String? {
+        switch self {
+        case .notPossibleCreateRegexFromGivenPattern(pattern: let pattern):
+            return "It is not possible to create a regex from given pattern '\(pattern)'. Check correct operation on playground."
         }
     }
 }
