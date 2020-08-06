@@ -61,6 +61,17 @@ public extension Date {
         let components = calendar.dateComponents([.year], from: startDate, to: endDate)
         return components.year!
     }
+    
+    /// Adds specified number of calendar components to original date.
+    /// - Parameters:
+    ///   - originalDate: Original date for adding.
+    ///   - component: Type of calendar component to add.
+    ///   - number: Number of calender components to add.
+    /// - Returns: New date and time (optional).
+    static func createNewDate(originalDate: Date, byAdding component: Calendar.Component, number: Int) -> Date? {
+        return Calendar.current.date(byAdding: component, value: number, to: originalDate)
+    }
+    
 }
 
 public enum DateTimeFormats : Int, CaseIterable {
