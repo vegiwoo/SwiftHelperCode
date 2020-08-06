@@ -3,7 +3,7 @@
 
 import Foundation
 
-public final class Constant {
+public final class Constants {
     
     // Date & Time
     public static let minute : TimeInterval = 60.0
