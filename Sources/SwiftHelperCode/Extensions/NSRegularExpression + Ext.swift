@@ -11,20 +11,8 @@ public extension NSRegularExpression {
         do {
             try self.init(pattern: pattern)
         } catch {
-            throw SHCErrors.RegexError.notPossibleCreateRegexFromGivenPattern(pattern: pattern)
+            preconditionFailure("Invalid regex: \(pattern).")
         }
-        
-        /*
-         init() throws {
-                 do {
-                     text = try String(contentsOfFile: "/Users/me/file.txt", encoding: NSUTF8StringEncoding ) }
-                 catch let error as NSError {
-                     throw error
-                 }
-             }
-         
-         */
-        
     }
     
     /// Checks a string against a regular expression.
