@@ -79,7 +79,7 @@ public enum DateTimeFormats : Int, CaseIterable {
     // https://ru.wikipedia.org/wiki/ISO_8601
     // https://nsdateformatter.com
     
-    static var allCasesDescriptions: [String] {
+    public static var allCasesDescriptions: [String] {
         var descriptions = [String]()
         allCases.forEach {descriptions.append($0.description)}
         return descriptions
