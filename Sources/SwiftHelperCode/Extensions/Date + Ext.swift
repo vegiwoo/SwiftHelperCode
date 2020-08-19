@@ -91,7 +91,7 @@ public enum DateTimeFormats : Int, CaseIterable {
     case simpleDateWithDash
     case dateTimeAndZoneWithDash
     
-    var description : String {
+    public var description : String {
         switch self {
         case .iso8601:
             return "yyyy-MM-dd'T'HH:mm:ssZ"
