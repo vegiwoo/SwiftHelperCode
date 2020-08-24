@@ -5,6 +5,13 @@ import Foundation
 
 /// An auxiliary structure for uniform formation of AWS credentials across different services.
 public struct AWSCredentials  {
+    
     public let awsAccessKeyID : String
     public let awsSecretAccessKey: String
+    
+    public init (awsAccessKeyID : String, awsSecretAccessKey: String) {
+        self.awsAccessKeyID = awsAccessKeyID
+        self.awsSecretAccessKey = awsSecretAccessKey
+    }
+    
 }
