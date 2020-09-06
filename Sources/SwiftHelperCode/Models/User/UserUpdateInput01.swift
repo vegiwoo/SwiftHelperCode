@@ -5,9 +5,9 @@ import Foundation
 
 /// Used to send a request to server to update user data.
 public struct UserUpdateInput01: Codable {
-    var firstname, lastname, email, password, dob : String?
-    var gender: UserGender01?
-    let address: AddressInput01?
+    public let firstname, lastname, email, password, dob : String?
+    public let gender: UserGender01?
+    public let address: AddressInput01?
     
     public init (firstname: String? = nil , lastname: String? = nil, email: String? = nil , password: String? = nil, dob: String? = nil,  gender: UserGender01? = nil, address: AddressInput01? = nil) {
         

@@ -5,8 +5,8 @@ import Foundation
 
 /// Used to sign in a registered user to service.
 public struct UserInputDirectSighIn01 : Codable {
-    let username: String
-    let password: String
+    public let username: String
+    public let password: String
     
     public init (username: String, password: String) {
         self.username = username

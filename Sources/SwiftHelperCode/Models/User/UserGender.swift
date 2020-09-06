@@ -20,8 +20,8 @@ public struct UserGender01 : OptionSet, Codable, CustomStringConvertible, Hashab
       try rawValue.encode(to: encoder)
     }
     
-    static let male   = Self(rawValue: 1 << 0)
-    static let female = Self(rawValue: 1 << 1)
+    public static let male   = Self(rawValue: 1 << 0)
+    public static let female = Self(rawValue: 1 << 1)
 
     public var description: String {
         var vals = [String]()

@@ -5,10 +5,10 @@ import Foundation
 
 /// Used to sign up a new user on service.
 public struct UserInputDirectSignUp01: Codable {
-    var username, email, password : String
-    var firstname, lastname: String?    
-    var gender: UserGender01?
-    var dob : Date?
+    public let username, email, password : String
+    public let firstname, lastname: String?
+    public let gender: UserGender01?
+    public let dob : Date?
 
     public init(username: String, firstname: String? = nil, lastname: String? = nil,
          email: String, password: String, gender: UserGender01? = nil, dob: Date? = nil) {

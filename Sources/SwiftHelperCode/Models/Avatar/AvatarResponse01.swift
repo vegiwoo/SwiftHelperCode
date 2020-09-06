@@ -5,11 +5,11 @@ import Foundation
 
 /// Used to respond to a server request for an existing avatar.
 public struct AvatarResponse01 : Codable {
-    let id         : Int
-    let directLink : String
-    let createAt   : Date?
-    let updateAt   : Date?
-    let deleteAt   : Date?
+    public let id         : Int
+    public let directLink : String
+    public let createAt   : Date?
+    public let updateAt   : Date?
+    public let deleteAt   : Date?
     
     public init (id: Int, directLink: String, createAt: Date? = nil, updateAt: Date? = nil, deleteAt: Date? = nil) {
         self.id         = id

@@ -5,19 +5,19 @@ import Foundation
 
 /// Used to respond to a server request for an existing user.
 public struct UserResponse: Codable {
-    let id        : Int?
-    let username  : String?
-    let firstname : String?
-    let lastname  : String?
-    let gender    : UserGender01?
-    let dob       : Date?
-    let age       : Int?
-    let email     : String
-    let avatars   : [AvatarResponse01]?
-    let addresses : [AddressResponse01]?
-    let createAt  : Date?
-    let updateAt  : Date?
-    let deleteAt  : Date?
+    public let id        : Int?
+    public let username  : String?
+    public let firstname : String?
+    public let lastname  : String?
+    public let gender    : UserGender01?
+    public let dob       : Date?
+    public let age       : Int?
+    public let email     : String
+    public let avatars   : [AvatarResponse01]?
+    public let addresses : [AddressResponse01]?
+    public let createAt  : Date?
+    public let updateAt  : Date?
+    public let deleteAt  : Date?
     
     public init (id: Int? = nil, username: String? = nil, firstname: String? = nil, lastname: String? = nil, gender: UserGender01? = nil, dob: Date? = nil, age: Int? = nil, email: String, avatars: [AvatarResponse01]? = nil, addresses : [AddressResponse01]? = nil, createAt: Date? = nil, updateAt: Date? = nil, deleteAt: Date? = nil){
         self.id = id
