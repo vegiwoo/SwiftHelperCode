@@ -10,4 +10,12 @@ public struct AvatarResponse01 : Codable {
     let createAt   : Date?
     let updateAt   : Date?
     let deleteAt   : Date?
+    
+    public init (id: Int, directLink: String, createAt: Date? = nil, updateAt: Date? = nil, deleteAt: Date? = nil) {
+        self.id         = id
+        self.directLink = directLink
+        self.createAt   = createAt
+        self.updateAt   = updateAt
+        self.deleteAt   = deleteAt
+    }
 }

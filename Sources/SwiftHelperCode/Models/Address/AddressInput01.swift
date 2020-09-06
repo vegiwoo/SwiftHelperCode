@@ -10,4 +10,12 @@ public struct AddressInput01 : Codable {
     let region  : String
     let country : String
     let zip     : String
+    
+    public init (address: String, city: String,region: String,country: String, zip: String) {
+        self.address = address
+        self.city    = city
+        self.region  = region
+        self.country = country
+        self.zip     = zip
+    }
 }
