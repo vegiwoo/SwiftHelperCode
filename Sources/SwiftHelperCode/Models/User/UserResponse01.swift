@@ -4,7 +4,7 @@
 import Foundation
 
 /// Used to respond to a server request for an existing user.
-public struct UserResponse: Codable {
+public struct UserResponse01: Codable {
     public let id        : Int?
     public let username  : String?
     public let firstname : String?
