@@ -12,7 +12,6 @@ public extension NSRegularExpression {
             try self.init(pattern: pattern)
         } catch {
             throw NSError(domain: "SwiftHelperCode", code: 0, userInfo: ["Invalid regex pattern" : "\(pattern)"])
-            //preconditionFailure("Invalid regex: \(pattern).")
         }
     }
     
