@@ -1,38 +1,38 @@
-//  UserGender.swift
-//  Created by Dmitry Samartcev on 06.09.2020.\
+//  UserGender02.swift
+//  Created by Dmitry Samartcev on 08.09.2020.
 
 import Foundation
 
-/// Determines gender of user on service.
-public struct UserGender01 : OptionSet, Codable, CustomStringConvertible, Hashable {
-    
-    public let rawValue: Int64
-    
-    public init(rawValue: Int64) {
-        self.rawValue = rawValue
-    }
-    
-    public init(from decoder: Decoder) throws {
-      rawValue = try .init(from: decoder)
-    }
-    
-    public func encode(to encoder: Encoder) throws {
-      try rawValue.encode(to: encoder)
-    }
-    
-    public static let male   = Self(rawValue: 1 << 0) // 1
-    public static let female = Self(rawValue: 1 << 1) // 2
+public protocol Option: RawRepresentable, Hashable, CaseIterable, Codable {}
 
-    public var description: String {
-        var vals = [String]()
+public typealias UserGenders01  = Set<UserGender01>
 
-        if self.contains(.male) {
-            vals.append("male")
+public enum UserGender01: String, Option {
+    case male, female
+}
+
+public extension Set where Element == UserGender01 {
+    static var male: Set<UserGender01> {
+        return [.male]
+    }
+
+    static var female: Set<UserGender01> {
+        return [.female]
+    }
+
+    static var all: Set<UserGender01> {
+        return Set(Element.allCases)
+    }
+}
+
+public extension Set where Element: Option {
+    var rawValue: Int {
+        var rawValue = 0
+        for (index, element) in Element.allCases.enumerated() {
+            if self.contains(element) {
+                rawValue |= (1 << index)
+            }
         }
-        if self.contains(.female) {
-            vals.append("female")
-        }
-        
-        return vals.joined(separator: ",")
+        return rawValue
     }
 }
