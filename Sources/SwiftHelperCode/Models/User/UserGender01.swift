@@ -7,6 +7,7 @@ public protocol Option: RawRepresentable, Hashable, CaseIterable, Codable {}
 
 public typealias UserGenders01  = Set<UserGender01>
 
+/// Defines gender of user.
 public enum UserGender01: String, Option {
     case male, female
 }
@@ -20,7 +21,7 @@ public extension Set where Element == UserGender01 {
         return [.female]
     }
 
-    static var all: Set<UserGender01> {
+    static var all: UserGenders01 {
         return Set(Element.allCases)
     }
 }
