@@ -4,7 +4,7 @@
 import Foundation
 
 /// Used as entity of 3D model in a publish request.
-struct ThreeDModelInput : Codable {
+public struct ThreeDModelInput : Codable {
     public let modelName       : String
     public let modelData       : Data
     public let coverData       : Data
