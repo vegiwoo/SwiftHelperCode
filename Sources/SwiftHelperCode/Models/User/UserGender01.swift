@@ -5,8 +5,6 @@ import Foundation
 
 public protocol Option: RawRepresentable, Hashable, CaseIterable, Codable {}
 
-public typealias UserGenders01  = Set<UserGender01>
-
 /// Defines gender of user.
 public enum UserGender01: String, Option {
     case male, female
@@ -37,3 +35,16 @@ public extension Set where Element: Option {
         return rawValue
     }
 }
+
+public extension UserGender01 {
+    var description : String {
+        switch self {
+        case .male:
+            return "male"
+        case .female:
+            return "female"
+        }
+    }
+}
+
+public typealias UserGenders01  = Set<UserGender01>

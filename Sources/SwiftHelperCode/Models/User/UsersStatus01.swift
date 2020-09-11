@@ -3,8 +3,6 @@
 
 import Foundation
 
-public typealias UsersStatus01  = Set<UserStatus01>
-
 /// Defines user's status on service.
 public enum UserStatus01: String, Option {
     case created, confirmed, blocked, archived
@@ -31,3 +29,20 @@ public extension Set where Element == UserStatus01 {
         return Set(Element.allCases)
     }
 }
+
+public extension UserStatus01 {
+    var description : String {
+        switch self {
+        case .created:
+            return "created"
+        case .confirmed:
+            return "confirmed"
+        case .blocked:
+            return "blocked"
+        case .archived:
+            return "archived"
+        }
+    }
+}
+
+public typealias UsersStatus01  = Set<UserStatus01>
