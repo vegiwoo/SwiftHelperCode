@@ -3,7 +3,7 @@
 
 import Foundation
 
-enum UsersPayloadCodingKeys: String, CodingKey {
+public enum UsersPayloadCodingKeys01: String, CodingKey {
     case subject        = "sub"
     case expiration     = "exp"
     case userid         = "userid"
@@ -12,7 +12,7 @@ enum UsersPayloadCodingKeys: String, CodingKey {
     case userStatus     = "userStatus"
 }
 
-enum MicroservicesPayloadCodingKeys: String, CodingKey {
+public enum MicroservicesPayloadCodingKeys01: String, CodingKey {
     case subject        = "sub"
     case expiration     = "exp"
 }
