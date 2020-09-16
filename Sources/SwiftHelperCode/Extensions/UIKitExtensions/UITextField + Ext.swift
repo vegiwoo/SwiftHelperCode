@@ -9,7 +9,7 @@ import UIKit
 #if os(iOS)
 public extension UITextField {
     
-    public func fitTextToBounds() {
+    func fitTextToBounds() {
         guard let text = text, let currentFont = font else { return }
         
         let bestFittingFont = UIFont.bestFittingFont(for: text, in: bounds, fontDescriptor: currentFont.fontDescriptor, additionalAttributes: basicStringAttributes)

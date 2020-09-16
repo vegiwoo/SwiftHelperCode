@@ -9,7 +9,7 @@ import UIKit
 #if os(iOS)
 public extension UIFont {
     
-    public static func bestFittingFontSize(for text: String, in bounds: CGRect, fontDescriptor: UIFontDescriptor, additionalAttributes: [NSAttributedString.Key: Any]? = nil) -> CGFloat {
+    static func bestFittingFontSize(for text: String, in bounds: CGRect, fontDescriptor: UIFontDescriptor, additionalAttributes: [NSAttributedString.Key: Any]? = nil) -> CGFloat {
         let constrainingDimension = min(bounds.width, bounds.height)
         let properBounds = CGRect(origin: .zero, size: bounds.size)
         var attributes = additionalAttributes ?? [:]
@@ -36,8 +36,8 @@ public extension UIFont {
         return bestFontSize
     }
     
-    public static func bestFittingFont(for text: String, in bounds: CGRect, fontDescriptor: UIFontDescriptor, additionalAttributes: [NSAttributedString.Key: Any]? = nil) -> UIFont {
-        let bestSize = bestFittingFontSize(for: text, in: bounds, fontDescriptor: fontDescriptor, additionalAttributes: additionalAttributes)
+    static func bestFittingFont(for text: String, in bounds: CGRect, fontDescriptor: UIFontDescriptor, additionalAttributes: [NSAttributedString.Key: Any]? = nil) -> UIFont {
+        let bestSize = UIFont.bestFittingFontSize(for: text, in: bounds, fontDescriptor: fontDescriptor, additionalAttributes: additionalAttributes)
         return UIFont(descriptor: fontDescriptor, size: bestSize)
     }
 }

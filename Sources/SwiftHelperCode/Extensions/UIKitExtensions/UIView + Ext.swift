@@ -9,7 +9,7 @@ import UIKit
 #if os(iOS)
 public extension UIView {
     
-    public static func screenSizeInInches () -> Float {
+    func screenSizeInInches () -> Float {
         let scale = UIScreen.main.scale
         
         let ppi = scale * ((UIDevice.current.userInterfaceIdiom == .pad) ? 132 : 163);
@@ -23,7 +23,7 @@ public extension UIView {
         //return String(format: "%0.1f", diagonal)
     }
     
-    public func findViewController() -> UIViewController? {
+    func findViewController() -> UIViewController? {
         if let nextResponder = self.next as? UIViewController {
             return nextResponder
         } else if let nextResponder = self.next as? UIView {

@@ -19,7 +19,7 @@ public struct ThreeDModelResponse01 : Codable {
     public let modelUpdateAt:        Date
     public let modelDeleteAt:        Date?
     
-    public init (id: Int? = nil, modelName: String, modelLink: String, modelCoverLink: String, modelIsPublic: Bool, modelsBytesCount: Double, modelComposite: Bool, modelPositionOrder:   ThreeDModelPositionOrder01, modelStatus: ThreeDModelStatus01, modelUserId: Int, modelCategoryId: Int, modelCreatedAt: Date, modelUpdateAt: Date, modelDeleteAt:        Date? = nil) {
+    public init (id: Int? = nil, modelName: String, modelLink: String, modelCoverLink: String, modelIsPublic: Bool, modelsBytesCount: Double, modelComposite: Bool, modelPositionOrder:   ThreeDModelPositionOrder01, modelStatus: ThreeDModelStatus01, modelUserId: Int, modelCategoryId: Int, modelCreatedAt: Date, modelUpdateAt: Date, modelDeleteAt:Date? = nil) {
         
         self.id                 = id
         self.modelName          = modelName
@@ -35,5 +35,15 @@ public struct ThreeDModelResponse01 : Codable {
         self.modelCreatedAt     = modelCreatedAt
         self.modelUpdateAt      = modelUpdateAt
         self.modelDeleteAt      = modelDeleteAt
+    }
+}
+
+extension ThreeDModelResponse01 : Hashable {
+    public static func == (lhs: ThreeDModelResponse01, rhs: ThreeDModelResponse01) -> Bool {
+        lhs.id == rhs.id
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 }
