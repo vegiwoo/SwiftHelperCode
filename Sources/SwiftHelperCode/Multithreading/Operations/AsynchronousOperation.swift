@@ -41,7 +41,7 @@ open class AsynchronousOperation : Operation {
         main()
     }
     
-    public override func main() {
+    open override func main() {
         guard !isCancelled else { return }
         DispatchQueue.global().asyncAfter(deadline: .now() + .seconds(1)) {
             print("asyncOperation perform")
