@@ -7,7 +7,7 @@ import Foundation
 /// Represents entity of an asynchronous operation
 ///
 /// Allows running long running tasks without having to block the calling thread until execution is complete
-public class AsynchronousOperation : Operation {
+open class AsynchronousOperation : Operation {
     
     private let lockQueue  = DispatchQueue(label: "tech.vegiwoo.asyncOperationLockQueue")
     

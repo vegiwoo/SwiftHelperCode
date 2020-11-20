@@ -5,7 +5,7 @@ import Foundation
 
 #if canImport(UIKit)
 /// Asynchronous result-oriented operation
-public class ResultDrivenOperation<Success, Failure> : AsynchronousOperation where Failure: Error {
+open class ResultDrivenOperation<Success, Failure> : AsynchronousOperation where Failure: Error {
     private(set) var result : Result<Success,Failure>? {
         didSet {
             guard let result = result else { return }
@@ -13,13 +13,13 @@ public class ResultDrivenOperation<Success, Failure> : AsynchronousOperation whe
         }
     }
     
-    public var onResult: ((_ result:  Result<Success,Failure>) -> Void)?
+    open var onResult: ((_ result:  Result<Success,Failure>) -> Void)?
     
     public override func finish() {
         fatalError("You should use finish(with:) to ensure a result.")
     }
     
-    public func finish(with result: Result<Success,Failure>) {
+    open func finish(with result: Result<Success,Failure>) {
         self.result = result
         super.finish()
     }
@@ -28,7 +28,7 @@ public class ResultDrivenOperation<Success, Failure> : AsynchronousOperation whe
         fatalError("You should use cancel(with:) to ensure a result.")
     }
     
-    public func cancel(with error: Failure) {
+    open func cancel(with error: Failure) {
         result = .failure(error)
         super.cancel()
     }
