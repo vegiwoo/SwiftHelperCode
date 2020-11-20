@@ -11,12 +11,12 @@ open class AsynchronousOperation : Operation {
     
     private let lockQueue  = DispatchQueue(label: "tech.vegiwoo.asyncOperationLockQueue")
     
-    public override var isAsynchronous: Bool {
+    override var isAsynchronous: Bool {
         return true
     }
     
     private var _isExecuting: Bool = false
-    public override var isExecuting: Bool {
+    open override var isExecuting: Bool {
         get { lockQueue.sync { _isExecuting } }
         set {
             willChangeValue(forKey: "isExecuting")
@@ -26,7 +26,7 @@ open class AsynchronousOperation : Operation {
     }
     
     private var _isFinished: Bool = false
-    public override var isFinished: Bool {
+    open override var isFinished: Bool {
         get { lockQueue.sync { _isFinished } }
         set {
             willChangeValue(forKey: "isFinished")
@@ -35,7 +35,7 @@ open class AsynchronousOperation : Operation {
         }
     }
     
-    public override func start() {
+    open override func start() {
         self.isFinished  = false
         self.isExecuting = true
         main()
@@ -49,7 +49,7 @@ open class AsynchronousOperation : Operation {
         }
     }
      
-    func finish() {
+    open func finish() {
         self.isExecuting = false
         self.isFinished = true
     }

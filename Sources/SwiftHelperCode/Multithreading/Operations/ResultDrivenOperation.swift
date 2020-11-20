@@ -15,7 +15,7 @@ open class ResultDrivenOperation<Success, Failure> : AsynchronousOperation where
     
     open var onResult: ((_ result:  Result<Success,Failure>) -> Void)?
     
-    public override func finish() {
+    open override func finish() {
         fatalError("You should use finish(with:) to ensure a result.")
     }
     
@@ -24,7 +24,7 @@ open class ResultDrivenOperation<Success, Failure> : AsynchronousOperation where
         super.finish()
     }
     
-    public override func cancel() {
+    open override func cancel() {
         fatalError("You should use cancel(with:) to ensure a result.")
     }
     
