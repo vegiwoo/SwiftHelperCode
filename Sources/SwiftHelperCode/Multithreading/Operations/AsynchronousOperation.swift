@@ -11,7 +11,7 @@ open class AsynchronousOperation : Operation {
     
     private let lockQueue  = DispatchQueue(label: "tech.vegiwoo.asyncOperationLockQueue")
     
-    override var isAsynchronous: Bool {
+    open override var isAsynchronous: Bool {
         return true
     }
     

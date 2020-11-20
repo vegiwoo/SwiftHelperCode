@@ -6,6 +6,7 @@ import Foundation
 #if canImport(UIKit)
 /// Asynchronous result-oriented operation
 open class ResultDrivenOperation<Success, Failure> : AsynchronousOperation where Failure: Error {
+    
     private(set) var result : Result<Success,Failure>? {
         didSet {
             guard let result = result else { return }
