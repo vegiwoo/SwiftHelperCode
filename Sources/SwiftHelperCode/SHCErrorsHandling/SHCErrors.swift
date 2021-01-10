@@ -16,7 +16,6 @@ public class SHCErrors {
     
     enum RegexError : Error {
         case notPossibleCreateRegexFromGivenPattern(pattern: String)
-        
     }
 }
 
