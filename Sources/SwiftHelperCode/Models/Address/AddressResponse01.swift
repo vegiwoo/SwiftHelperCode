@@ -23,7 +23,5 @@ public struct AddressResponse01 : Codable {
         self.createAt = createAt
         self.updateAt = updateAt
         self.deleteAt = deleteAt
-        
-        
     }
 }
