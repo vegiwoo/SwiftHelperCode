@@ -4,9 +4,9 @@
 import Foundation
 
 public extension Array where Element: Comparable  {
-    /// Determines if array is sorted
-    /// - Parameter isOrderedBefore: The order of the checked sort
-    /// - Returns: Check flag
+    /// Determines if array is sorted.
+    /// - Parameter isOrderedBefore: The order of the checked sort.
+    /// - Returns: Check flag.
     func isSorted(isOrderedBefore: (Element, Element) -> Bool) -> Bool {
         for i in 1..<self.count {
             if !isOrderedBefore(self[i-1], self[i]) {
