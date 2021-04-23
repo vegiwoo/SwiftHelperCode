@@ -6,12 +6,12 @@
 import Foundation
 import Combine
 
+@available(OSX 10.15, *)
 public struct AppReducer<State, Action, Environment> {
     public init(reduce: @escaping (inout State, Action, Environment) -> AnyPublisher<Action, Never>) {
         self.reduce = reduce
     }
     
-
     public let reduce: (inout State, Action, Environment) -> AnyPublisher<Action, Never>
     
     public func callAsFunction(_ state: inout State, _ action: Action, _ environment: Environment) -> AnyPublisher<Action, Never> {

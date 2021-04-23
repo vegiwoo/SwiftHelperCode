@@ -9,8 +9,10 @@ import SwiftUI
 import Combine
 
 #if canImport(SwiftUI)
+
+@available(OSX 10.15, *)
 public final class AppStore<State, Action>: ObservableObject {
-    @Published private(set) var state: State
+    @Published public private(set) var state: State
 
     private let reduce: (inout State, Action) -> AnyPublisher<Action, Never>
     private var effectsCancellables: [UUID: AnyCancellable] = .init()
