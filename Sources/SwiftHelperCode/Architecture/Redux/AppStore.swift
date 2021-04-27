@@ -16,7 +16,7 @@ public final class AppStore<State, Action>: ObservableObject {
 
     private let reduce: (inout State, Action) -> AnyPublisher<Action, Never>
     private var effectsCancellables: [UUID: AnyCancellable] = .init()
-    private let queue: DispatchQueue
+    public let appStoreQueue: DispatchQueue
     
     public init<Environment>(
         initialState: State,
@@ -24,7 +24,7 @@ public final class AppStore<State, Action>: ObservableObject {
         environment: Environment,
         subscriptionQueue: DispatchQueue = .init(label: "com.application.appStoreQueue")
         ) {
-        self.queue = subscriptionQueue
+        self.appStoreQueue = subscriptionQueue
         self.state = initialState
         self.reduce = {state, action in
             reducer(&state, action, environment)
@@ -38,7 +38,7 @@ public final class AppStore<State, Action>: ObservableObject {
         let uuid = UUID()
         
         let cancellable = effect
-            .subscribe(on: queue)
+            .subscribe(on: appStoreQueue)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 didComplete = true
