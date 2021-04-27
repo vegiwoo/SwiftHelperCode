@@ -10,7 +10,7 @@ import Combine
 
 #if canImport(SwiftUI)
 
-@available(OSX 10.15, *)
+@available(iOS 13.0, *)
 public final class AppStore<State, Action>: ObservableObject {
     @Published public private(set) var state: State
 
