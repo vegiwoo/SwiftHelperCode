@@ -51,7 +51,7 @@ public final class AppStore<State, Action>: ObservableObject {
         }
     }
     
-    @available(iOS 14.0, *)
+    //@available(iOS 14.0, *)
     public func derived<DerivedState: Equatable, ExtractedAction>(
         deriveState: @escaping (State) -> DerivedState,
         embedAction: @escaping (ExtractedAction) -> Action
@@ -61,12 +61,12 @@ public final class AppStore<State, Action>: ObservableObject {
             self.send(embedAction(action))
             return Empty().eraseToAnyPublisher()
         }, environment: ())
-            $state
+           _ = $state
                 .map(deriveState)
                 .removeDuplicates()
                 .receive(on: DispatchQueue.main)
-                //.assign(to: \.state, on: store)
-                .assign(to: &store.$state)
+                .assign(to: \.state, on: store)
+                //.assign(to: &store.$state)
         return store
     }
 }
@@ -80,7 +80,7 @@ public extension AppStore {
         )
     }
     
-    @available(iOS 14.0, *)
+    //@available(iOS 14.0, *)
     func connect<C: AppConnector>(using connector: C) -> AppStore<C.ViewState, C.ViewAction> where C.State == State, C.Action == Action {
         derived(deriveState: connector.connect(state:), embedAction: connector.connect(action:))
     }
