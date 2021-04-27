@@ -47,7 +47,7 @@ public final class AppStore<State, Action>: ObservableObject {
                 self?.send($0)
             }
         if !didComplete {
-            effectsCancellables[uuid] = cancellable
+            effectsCancellables.updateValue(cancellable, forKey: uuid)
         }
     }
     
