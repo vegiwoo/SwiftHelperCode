@@ -80,6 +80,16 @@ public extension AppStore {
         )
     }
     
+    func binding<Value>(for keyPath: KeyPath<State, Value>) -> Binding<Value> {
+        Binding<Value>(
+            get: {
+                self.state[keyPath: keyPath]},
+            set: {
+                self.state = $0 as! State
+            }
+        )
+    }
+    
     //@available(iOS 14.0, *)
     func connect<C: AppConnector>(using connector: C) -> AppStore<C.ViewState, C.ViewAction> where C.State == State, C.Action == Action {
         derived(deriveState: connector.connect(state:), embedAction: connector.connect(action:))
