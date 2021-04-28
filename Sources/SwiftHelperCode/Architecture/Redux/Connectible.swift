@@ -9,3 +9,12 @@ public protocol Connectible {
     associatedtype Action: Equatable
     associatedtype ViewModel
 }
+
+public extension Connectible where Self: Equatable & Identifiable {
+    var id: UUID {UUID()}
+    
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        return lhs.id == rhs.id
+    }
+}
+
