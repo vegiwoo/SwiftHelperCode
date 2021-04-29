@@ -66,7 +66,8 @@ public final class AppStore<State, Action>: ObservableObject {
                 .removeDuplicates()
                 .receive(on: DispatchQueue.main)
                 .assign(to: \.state, on: store)
-                //.assign(to: &store.$state)
+                
+        //.assign(to: &store.$state)
         return store
     }
 }
