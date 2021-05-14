@@ -27,8 +27,8 @@ public class LinkedListNode<T> where T: Equatable {
 /// Linked list
 public struct LinkedList<T>: CustomStringConvertible where T: Equatable{
 
-     var head: LinkedListNode<T>?
-     var tail: LinkedListNode<T>?
+    var head: LinkedListNode<T>?
+    var tail: LinkedListNode<T>?
     
     public var count: Int = 0
     
@@ -68,6 +68,8 @@ public struct LinkedList<T>: CustomStringConvertible where T: Equatable{
         }
         return text + "]"
     }
+    
+    public init() {}
     
     // MARK: - Adding
     /// Adds a new node to the end of the linked list.
