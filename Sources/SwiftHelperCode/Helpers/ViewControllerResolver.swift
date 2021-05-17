@@ -7,6 +7,8 @@ import SwiftUI
 /// Implements interaction with UIViewController from SwiftUI.
 public final class ViewControllerResolver: UIViewControllerRepresentable {
     
+    public init() {}
+    
     public func makeUIViewController(context: Context) -> ParentResolverViewController {
         ParentResolverViewController()
     }
