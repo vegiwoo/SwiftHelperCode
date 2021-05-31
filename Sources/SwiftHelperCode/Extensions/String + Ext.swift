@@ -11,4 +11,10 @@ public extension String {
     mutating func capitalizeFirstLetter() {
         self = self.capitalizingFirstLetter()
     }
+    
+    func translateToLatin(nonLatin: String, spaceReplacementCharacter: String) -> String {
+        let mut = NSMutableString(string: nonLatin) as CFMutableString
+        CFStringTransform(mut, nil, "Any-Latin; Latin-ASCII; Any-Lower;" as CFString, false)
+        return (mut as String).replacingOccurrences(of: " ", with: spaceReplacementCharacter)
+    }
 }
