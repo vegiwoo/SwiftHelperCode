@@ -51,8 +51,8 @@ public extension UIImage {
     /// Determines the predominance of a dark or light color in image.
     /// - Returns: Bool flag.
     /// - Remark: Algorithm from: http://www.w3.org/WAI/ER/WD-AERT/#color-contrast
-    static func isLight() -> Bool {
-        guard let components = self.cgColor.components else { return false }
+    func isLight() -> Bool {
+        guard let components = self.CGColor.components else { return false }
         let components01 = (components[0] * 299)
         let components02 = (components[1] * 587)
         let components03 = (components[2] * 114)
