@@ -48,17 +48,17 @@ public extension UIImage {
         return UIColor(red: CGFloat(bitmap[0]) / 255, green: CGFloat(bitmap[1]) / 255, blue: CGFloat(bitmap[2]) / 255, alpha: CGFloat(bitmap[3]) / 255)
     }
     
-    /// Determines the predominance of a dark or light color in image.
-    /// - Returns: Bool flag.
-    /// - Remark: Algorithm from: http://www.w3.org/WAI/ER/WD-AERT/#color-contrast
-    func isLight() -> Bool {
-        guard let components = self.CGColor.components else { return false }
-        let components01 = (components[0] * 299)
-        let components02 = (components[1] * 587)
-        let components03 = (components[2] * 114)
-        
-        let brightness = ( components01 + components02 + components03) / 1000
-        return brightness < 0.5 ? false : true
-    }
+//    /// Determines the predominance of a dark or light color in image.
+//    /// - Returns: Bool flag.
+//    /// - Remark: Algorithm from: http://www.w3.org/WAI/ER/WD-AERT/#color-contrast
+//    func isLight() -> Bool {
+//        guard let components = self.CGColor.components else { return false }
+//        let components01 = (components[0] * 299)
+//        let components02 = (components[1] * 587)
+//        let components03 = (components[2] * 114)
+//        
+//        let brightness = ( components01 + components02 + components03) / 1000
+//        return brightness < 0.5 ? false : true
+//    }
 }
 #endif
