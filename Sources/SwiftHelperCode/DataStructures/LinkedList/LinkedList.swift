@@ -5,15 +5,15 @@ import Foundation
 
 /// Linked list
 public struct LinkedList<T>: CustomStringConvertible where T: Equatable{
-    /// Head of linked list
+    /// Head of linked list.
     private var head: LinkedListNode<T>?
-    /// Tail of linked list
+    /// Tail of linked list.
     private var tail: LinkedListNode<T>?
-    /// Queue for working with a linked list
+    /// Queue for working with a linked list.
     private let linkedListQueue: DispatchQueue = DispatchQueue(label: "LinkedListQueue", qos: .utility)
-    /// Number of items in a linked list
+    /// Number of items in a linked list.
     public var count: Int = 0
-    /// Checking a linked list for elements
+    /// Checking a linked list for elements.
     public var isEmpty: Bool { head == nil }
     /// Returns first node (head) of linked list.
     public var first: LinkedListNode<T>? { head }
@@ -34,7 +34,8 @@ public struct LinkedList<T>: CustomStringConvertible where T: Equatable{
         }
         return text + "]"
     }
-    
+    // MARK: - Initialization.
+    public init() {}
     // MARK: - Adding.
     /// Adds a new node to end of linked list.
     /// - Parameter value: Value for new LinkedListNode.
