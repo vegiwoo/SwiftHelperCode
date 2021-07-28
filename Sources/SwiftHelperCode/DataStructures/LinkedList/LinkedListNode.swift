@@ -2,7 +2,6 @@
 //  Created by Dmitry Samartcev on 25.03.2021.
 
 import Foundation
-
 /// Node for linked list
 public class LinkedListNode<T> where T: Equatable {
     public var id: UUID

@@ -2,7 +2,6 @@
 //  Created by Dmitry Samartcev on 25.03.2021.
 
 import Foundation
-
 /// Linked list
 public struct LinkedList<T>: CustomStringConvertible where T: Equatable{
     /// Head of linked list.

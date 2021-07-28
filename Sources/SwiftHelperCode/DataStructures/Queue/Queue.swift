@@ -2,7 +2,7 @@
 //  Created by Dmitry Samartcev on 28.07.2021.
 
 import Foundation
-
+/// Queue
 public struct Queue<T> : CustomStringConvertible where T: Equatable {
     /// LinkedList
     private var list = LinkedList<T>()
