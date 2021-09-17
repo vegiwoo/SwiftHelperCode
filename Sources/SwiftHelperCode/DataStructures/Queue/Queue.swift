@@ -1,8 +1,10 @@
 //  Queue.swift
 //  Created by Dmitry Samartcev on 28.07.2021.
 
+
 import Foundation
 /// Queue
+/// TODO: Исправитиь гонку состояний, ввести режим отображения/скрытия лога.
 public class Queue<T> : CustomStringConvertible where T: Equatable & Identifiable {
     /// DispatchQueue for working with the queue
     private var queue: DispatchQueue
@@ -38,17 +40,24 @@ public class Queue<T> : CustomStringConvertible where T: Equatable & Identifiabl
     /// - Returns: Removed item (optional).
     public func dequeue() -> T? {
         var element: T?
-        let workItem = DispatchWorkItem {[weak self] in
-            element = self?.list.popHead()
-        }
-        queue.sync(execute: workItem)
-        workItem.notify(queue: queue) {
+//        let workItem = DispatchWorkItem {[weak self] in
+//            element = self?.list.popHead()
+//        }
+        queue.sync(flags: .barrier) {
+            element = list.popHead()
             if let id = element?.id {
                 #if DEBUG
                 print("👯‍♀️ Element with ID '\(id)' is taken from queue.\nThere are '\(self.count)' elements left in messageQueue.")
                 #endif
             }
         }
+//        workItem.notify(queue: queue) {
+//            if let id = element?.id {
+//                #if DEBUG
+//                print("👯‍♀️ Element with ID '\(id)' is taken from queue.\nThere are '\(self.count)' elements left in messageQueue.")
+//                #endif
+//            }
+//        }
         return element
     }
     /// Method for viewing first item in queue.
