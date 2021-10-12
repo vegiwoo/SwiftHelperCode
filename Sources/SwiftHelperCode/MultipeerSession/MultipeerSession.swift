@@ -74,7 +74,7 @@ public class MultipeerSession: NSObject {
     }
     
     /// Creates a multiuser session.
-    public func createSession() {
+    public func createSession() -> AnyPublisher<Bool, Never> {
         session = MCSession(peer: myPeerID, securityIdentity: nil, encryptionPreference: .required)
         session.delegate = self
         
@@ -85,10 +85,12 @@ public class MultipeerSession: NSObject {
         serviceBrowser = MCNearbyServiceBrowser(peer: myPeerID, serviceType: serviceType)
         serviceBrowser.delegate = self
         serviceBrowser.startBrowsingForPeers()
+        
+        return Just(session != nil).eraseToAnyPublisher()
     }
     
     /// Stopping and deleting a multiuser session.
-    public func stopSession() {
+    public func stopSession() -> AnyPublisher <Bool, Never>{
         serviceBrowser.stopBrowsingForPeers()
         serviceBrowser.delegate = nil
         serviceBrowser = nil
@@ -99,6 +101,9 @@ public class MultipeerSession: NSObject {
         
         session.delegate = nil
         session = nil
+        
+        return Just(serviceBrowser == nil && serviceAdvertiser == nil && session == nil)
+            .eraseToAnyPublisher()
     }
     
 }
