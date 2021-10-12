@@ -14,8 +14,10 @@ public class MultipeerSession: NSObject {
     
     /// Data received handler.
     private let receivedDataHandler: (Data, MCPeerID) -> Void
-    /// Peer join multiuser session handler.
+    /// Peer joined multiuser session handler.
     private let peerJoinedHandler: (MCPeerID) -> Void
+    /// Peer join multiuser session handler.
+    private let peerJoinHandler: (MCPeerID) -> Void
     /// Peer disconnect handler from multiuser session.
     private let peerLeftHandler: (MCPeerID) -> Void
     /// New peer discovery handler in multiuser session.
@@ -27,12 +29,14 @@ public class MultipeerSession: NSObject {
     public init(serviceType: String,
                 receivedDataHandler: @escaping (Data, MCPeerID) -> Void,
                 peerJoinedHandler: @escaping (MCPeerID) -> Void,
+                peerJoinHandler: @escaping (MCPeerID) -> Void,
                 peerLeftHandler: @escaping (MCPeerID) -> Void,
                 peerDiscoveredHandler: @escaping (MCPeerID) -> Bool) {
         
         self.serviceType = serviceType
         self.receivedDataHandler = receivedDataHandler
         self.peerJoinedHandler = peerJoinedHandler
+        self.peerJoinHandler = peerJoinHandler
         self.peerLeftHandler = peerLeftHandler
         self.peerDiscoveredHandler = peerDiscoveredHandler
         
@@ -117,10 +121,15 @@ public class MultipeerSession: NSObject {
 extension MultipeerSession: MCSessionDelegate {
     
     public func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
-        if state == .connected {
-            peerJoinedHandler(peerID)
-        } else if state == .notConnected {
+        switch state {
+        case .notConnected:
             peerLeftHandler(peerID)
+        case .connecting:
+            peerJoinHandler(peerID)
+        case .connected:
+            peerJoinedHandler(peerID)
+        @unknown default:
+            break
         }
     }
     
