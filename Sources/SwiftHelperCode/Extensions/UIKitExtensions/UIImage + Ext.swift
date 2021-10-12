@@ -6,8 +6,7 @@ import Foundation
 import UIKit
 
 public extension UIImage {
-    
-    /// Resizes the image.
+    /// Resizes image.
     /// - Parameters:
     ///     - image: Original image.
     ///     - targetSize: Specified size for a new measurement.
@@ -57,7 +56,7 @@ public extension UIImage {
     /// Compares two images.
     /// - Parameter image: Image for comparison.
     /// - Returns: Boolean flag for performing the operation.
-    public func isEqualToImage(image: UIImage) -> Bool {
+    func isEqualToImage(image: UIImage) -> Bool {
         if let selfData = self.pngData() as NSData?,
            let otherData = image.pngData() as NSData? {
             return selfData.isEqual(otherData)
