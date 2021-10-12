@@ -91,21 +91,27 @@ public class MultipeerSession: NSObject {
     
     /// Stopping and deleting a multiuser session.
     public func stopSession() -> AnyPublisher <Bool, Never>{
-        serviceBrowser.stopBrowsingForPeers()
-        serviceBrowser.delegate = nil
-        serviceBrowser = nil
-        
-        serviceAdvertiser.stopAdvertisingPeer()
-        serviceAdvertiser.delegate = nil
-        serviceAdvertiser = nil
-        
-        session.delegate = nil
-        session = nil
-        
+        // Remove MCNearbyServiceBrowser.
+        if serviceBrowser != nil {
+            serviceBrowser.stopBrowsingForPeers()
+            serviceBrowser.delegate = nil
+            serviceBrowser = nil
+        }
+        // Remove MCNearbyServiceAdvertiser
+        if serviceAdvertiser != nil {
+            serviceAdvertiser.stopAdvertisingPeer()
+            serviceAdvertiser.delegate = nil
+            serviceAdvertiser = nil
+        }
+        // Remove MCSession.
+        if session != nil {
+            session.delegate = nil
+            session = nil
+        }
+        // Result.
         return Just(serviceBrowser == nil && serviceAdvertiser == nil && session == nil)
             .eraseToAnyPublisher()
     }
-    
 }
 
 extension MultipeerSession: MCSessionDelegate {
