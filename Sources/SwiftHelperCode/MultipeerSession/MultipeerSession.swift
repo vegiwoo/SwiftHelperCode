@@ -7,7 +7,6 @@ import MultipeerConnectivity
 /// A simple abstraction of the MultipeerConnectivity API as used in this app.
 public class MultipeerSession: NSObject {
     private let serviceType: String
-    
     private let myPeerID = MCPeerID(displayName: UIDevice.current.name)
     private var session: MCSession!
     private var serviceAdvertiser: MCNearbyServiceAdvertiser!
@@ -38,17 +37,6 @@ public class MultipeerSession: NSObject {
         self.peerDiscoveredHandler = peerDiscoveredHandler
         
         super.init()
-        
-        session = MCSession(peer: myPeerID, securityIdentity: nil, encryptionPreference: .required)
-        session.delegate = self
-        
-        serviceAdvertiser = MCNearbyServiceAdvertiser(peer: myPeerID, discoveryInfo: nil, serviceType: serviceType)
-        serviceAdvertiser.delegate = self
-        serviceAdvertiser.startAdvertisingPeer()
-        
-        serviceBrowser = MCNearbyServiceBrowser(peer: myPeerID, serviceType: serviceType)
-        serviceBrowser.delegate = self
-        serviceBrowser.startBrowsingForPeers()
     }
     
     /// Sends data to all peers in a multiuser session.
@@ -83,6 +71,34 @@ public class MultipeerSession: NSObject {
     /// List of connected peers to multiuser session.
     public var connectedPeers: [MCPeerID] {
         return session.connectedPeers
+    }
+    
+    /// Creates a multiuser session.
+    public func createSession() {
+        session = MCSession(peer: myPeerID, securityIdentity: nil, encryptionPreference: .required)
+        session.delegate = self
+        
+        serviceAdvertiser = MCNearbyServiceAdvertiser(peer: myPeerID, discoveryInfo: nil, serviceType: serviceType)
+        serviceAdvertiser.delegate = self
+        serviceAdvertiser.startAdvertisingPeer()
+        
+        serviceBrowser = MCNearbyServiceBrowser(peer: myPeerID, serviceType: serviceType)
+        serviceBrowser.delegate = self
+        serviceBrowser.startBrowsingForPeers()
+    }
+    
+    /// Stopping and deleting a multiuser session.
+    public func stopSession() {
+        serviceBrowser.stopBrowsingForPeers()
+        serviceBrowser.delegate = nil
+        serviceBrowser = nil
+        
+        serviceAdvertiser.stopAdvertisingPeer()
+        serviceAdvertiser.delegate = nil
+        serviceAdvertiser = nil
+        
+        session.delegate = nil
+        session = nil
     }
     
 }
