@@ -12,12 +12,15 @@ public struct ARViewWrapper: UIViewRepresentable {
     @Binding public var debugOptions: ARView.DebugOptions
     private var coordinatorDelegate: ARViewWrapperCoordinatorDelegate
     
-    @State public var isTapGesture: Bool = false
+    @Binding public var isTapGesture: Bool
     
-    public init (arSession: Binding<ARSession>, debugOptions: Binding<ARView.DebugOptions>,
+    public init (arSession: Binding<ARSession>,
+                 debugOptions: Binding<ARView.DebugOptions>,
+                 isTapGesture: Binding<Bool>,
                  delegate: ARViewWrapperCoordinatorDelegate) {
         self._arSession = arSession
         self._debugOptions = debugOptions
+        self._isTapGesture = isTapGesture
         self.coordinatorDelegate = delegate
     }
     
