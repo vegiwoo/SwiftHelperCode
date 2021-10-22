@@ -20,6 +20,9 @@ public protocol ARProvider {
     var arSession: ARSession { get }
     /// Plane detection mode.
     var planeDetection: PlaneDetection { get }
+    // MARK: - Work with ARSession.
+    /// Adds a delegate for ArSession.
+    func append(arSessionDelegate: ARSessionDelegate)
     // MARK: - Work with files.
     /// Generates a URL to download the '* .reality' file.
     ///
@@ -58,6 +61,7 @@ public protocol ARProvider {
 /// - Implements ARProvider protocol.
 @available (iOS 14.0, *)
 public final class ARProviderImpliment: NSObject, ARProvider {
+    
     // MARK: - Variables and constants.
     public let arSessionConfiguration: ARWorldTrackingConfiguration
     public let arSession: ARSession
@@ -68,8 +72,7 @@ public final class ARProviderImpliment: NSObject, ARProvider {
     var loadingStreams: [AnyCancellable] = .init()
     
     public init(peopleOcclusionIsEnabled: Bool,
-                planeDetection: PlaneDetection,
-                arSessionDelegate: ARSessionDelegate) {
+                planeDetection: PlaneDetection) {
         // Make ARWorldTrackingConfiguration.
         arSessionConfiguration = .init()
         arSessionConfiguration.isCollaborationEnabled = true
@@ -87,9 +90,6 @@ public final class ARProviderImpliment: NSObject, ARProvider {
         // Make and run ARSession.
         arSession = .init()
         arSession.run(arSessionConfiguration, options: [.resetTracking, .removeExistingAnchors])
-        
-        self.arSesionDelegate = arSessionDelegate
-        arSession.delegate =  self.arSesionDelegate
         
         super.init()
         
