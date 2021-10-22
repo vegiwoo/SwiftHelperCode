@@ -22,10 +22,12 @@ public struct ARViewWrapper: UIViewRepresentable {
         self._debugOptions = debugOptions
         self._isTapGesture = isTapGesture
         self.coordinatorDelegate = delegate
+        print("ARViewWrapper init")
     }
     
     public func makeCoordinator() -> ARViewWrapperCoordinator {
-        ARViewWrapperCoordinator()
+        print("ARViewWrapperCoordinator init")
+        return ARViewWrapperCoordinator()
     }
 
     public func makeUIView(context: Context) -> ARView {
@@ -36,6 +38,7 @@ public struct ARViewWrapper: UIViewRepresentable {
         // Set the required values for the coordinator:
         context.coordinator.parent = arView
         context.coordinator.delegate = coordinatorDelegate
+        // Return
         return arView
     }
     
@@ -44,7 +47,6 @@ public struct ARViewWrapper: UIViewRepresentable {
             context.coordinator.isTapGesture.toggle()
         }
     }
-
 }
 #endif
 
@@ -56,7 +58,7 @@ public final class ARViewWrapperCoordinator: NSObject {
     public var isTapGesture: Bool = false {
         didSet {
             if isTapGesture {
-                enableTapGesture(with: #selector(delegate?.tapHandler(sender:)))
+                enableTapGesture()
             }
         }
     }
@@ -65,12 +67,16 @@ public final class ARViewWrapperCoordinator: NSObject {
         super.init()
     }
     
-    func enableTapGesture(with handler: Selector?) {
-        let tapGestureRecognizer: UITapGestureRecognizer = .init(target: parent, action: handler)
+    func enableTapGesture() {
+        let tapGestureRecognizer: UITapGestureRecognizer = .init(target: parent, action: #selector(tapHandler(sender:)))
         parent?.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    @objc private func tapHandler(sender: UIGestureRecognizer) {
+        delegate?.tapHandler(senderState: sender.state, tapPoint: sender.location(in: parent))
     }
 }
 
-@objc public protocol ARViewWrapperCoordinatorDelegate {
-    @objc func tapHandler(sender: UITapGestureRecognizer) -> Void
+public protocol ARViewWrapperCoordinatorDelegate: AnyObject {
+    func tapHandler(senderState: UIGestureRecognizer.State, tapPoint: CGPoint) -> Void
 }
