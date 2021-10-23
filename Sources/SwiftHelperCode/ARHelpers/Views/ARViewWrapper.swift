@@ -12,8 +12,7 @@ public struct ARViewWrapper: UIViewRepresentable {
     @Binding public var debugOptions: ARView.DebugOptions
     
     public init (arSession: Binding<ARSession>,
-                 debugOptions: Binding<ARView.DebugOptions>,
-                 isTapGesture: Binding<Bool>) {
+                 debugOptions: Binding<ARView.DebugOptions>) {
         self._arSession = arSession
         self._debugOptions = debugOptions
     }
