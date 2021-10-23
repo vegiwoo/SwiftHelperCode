@@ -10,14 +10,12 @@ public struct ARViewWrapper: UIViewRepresentable {
     
     @Binding public var arSession: ARSession
     @Binding public var debugOptions: ARView.DebugOptions
-    @Binding public var isTapGesture: Bool
     
     public init (arSession: Binding<ARSession>,
                  debugOptions: Binding<ARView.DebugOptions>,
                  isTapGesture: Binding<Bool>) {
         self._arSession = arSession
         self._debugOptions = debugOptions
-        self._isTapGesture = isTapGesture
     }
     
     public func makeUIView(context: Context) -> ARView {
@@ -25,6 +23,9 @@ public struct ARViewWrapper: UIViewRepresentable {
         let arView = ARView(frame: .zero, cameraMode: .ar, automaticallyConfigureSession: false)
         arView.session = arSession
         arView.debugOptions = debugOptions
+        
+        arView.enableTapGestureRecognizer()
+        
         // Return
         return arView
     }
@@ -34,3 +35,14 @@ public struct ARViewWrapper: UIViewRepresentable {
     }
 }
 #endif
+
+extension ARView {
+    public func enableTapGestureRecognizer() {
+        let tapGestureRecognizer: UITapGestureRecognizer = .init(target: self, action: #selector (tapGesture(sender:)))
+        self.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    @objc func tapGesture(sender: UITapGestureRecognizer) {
+        print(sender.location(in: self))
+    }
+}
