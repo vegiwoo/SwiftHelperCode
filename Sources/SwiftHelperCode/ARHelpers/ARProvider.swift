@@ -25,6 +25,8 @@ public protocol ARProvider {
     var debugOptions: ARView.DebugOptions { get }
     
     // MARK: - Work with ARSession.
+    /// Assigns a delegate for ARSession.
+    func append(delegate: ARSessionDelegate)
     /// Reconfigures session.
     /// - Parameters:
     ///   - isPeopleOcclusion: A flag to enable or disable people occlusion in ARSession (optional).

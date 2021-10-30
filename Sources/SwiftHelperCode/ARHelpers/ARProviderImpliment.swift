@@ -12,6 +12,7 @@ import Combine
 /// - Implements ARProvider protocol.
 @available (iOS 14.0, *)
 public final class ARProviderImpliment: NSObject, ARProvider {
+    
 
     // MARK: - Variables and constants.
     public var arSessionConfiguration: ARWorldTrackingConfiguration {
