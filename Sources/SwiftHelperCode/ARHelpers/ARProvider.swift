@@ -21,18 +21,17 @@ public protocol ARProvider {
     var arSession: ARSession { get }
     /// Plane detection mode.
     var planeDetectionMode: PlaneDetection { get }
-    /// Delegate for ARSession.
-    var arSesionDelegate: ARSessionDelegate? { get set }
     /// Debug options for ARView.
     var debugOptions: ARView.DebugOptions { get }
     
     // MARK: - Work with ARSession.
     /// Reconfigures session.
     /// - Parameters:
+    ///   - isPeopleOcclusion: A flag to enable or disable people occlusion in ARSession (optional).
     ///   - planeDetectionMode: Mode for PlaneDetection (optional).
     ///   - runOptions: Re-run options for ARSession (optional).
-    ///   - debugOptions: De
-    func reconfigureSession(planeDetectionMode: PlaneDetection?, runOptions: ARSession.RunOptions?, debugOptions: DebugOptions?)
+    ///   - debugOptions: Debug options for ARViews (optional).
+    func reconfigureSession(isPeopleOcclusion: Bool?, planeDetectionMode: PlaneDetection?, runOptions: ARSession.RunOptions?, debugOptions: DebugOptions?)
     /// Pauses session.
     func pauseSession()
     
@@ -45,7 +44,7 @@ public protocol ARProvider {
     ///   - fileExtension: File extension.
     ///   - sceneName: Scene name.
     /// - Returns: Returns the generated URL (optional) or an error (as publisher).
-    func findURLForRelalityFile(filename: String, fileExtension: String, sceneName:String) -> AnyPublisher <URL?, Error>
+    func findURLForRelalityFile(filename: String, fileExtension: String, sceneName: String) -> AnyPublisher <URL?, Error>
     /// Generates a URL to download the '* .usdz' file.
     ///
     /// Used to search and generate a URL for a file in local project directory.

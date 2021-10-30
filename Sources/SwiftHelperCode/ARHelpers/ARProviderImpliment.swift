@@ -31,20 +31,17 @@ public final class ARProviderImpliment: NSObject, ARProvider {
             newValue.planeDetection = planeDetectionMode
         }
     }
-    
     public var isPeopleOcclusion: Bool = false
-    
     public let arSession: ARSession
-    public weak var arSesionDelegate: ARSessionDelegate?
-    
     public var planeDetectionMode: PlaneDetection
-    
     public var debugOptions: ARView.DebugOptions
     
     /// Subscribers for loading entities.
     var loadingStreams: [AnyCancellable] = .init()
     
-    public init(planeDetectionMode: PlaneDetection, arSesionDelegate: ARSessionDelegate, debugOptions: DebugOptions) {
+    public init(planeDetectionMode: PlaneDetection, debugOptions: DebugOptions, isPeopleOcclusion: Bool) {
+        // Assign people occlusion.
+        self.isPeopleOcclusion = isPeopleOcclusion
         // Assign debugOptions.
         self.debugOptions = debugOptions
         // Assign planeDetection mode.
@@ -54,10 +51,7 @@ public final class ARProviderImpliment: NSObject, ARProvider {
         // Make and run ARSession.
         arSession = .init()
         arSession.run(arSessionConfiguration, options: [.resetTracking, .removeExistingAnchors])
-        // Assign session delegate.
-        self.arSesionDelegate = arSesionDelegate
-        arSession.delegate = self.arSesionDelegate
-        
+ 
         super.init()
         
         #if DEBUG

@@ -9,16 +9,23 @@ import ARKit
 @available (iOS 14.0, *)
 extension ARProviderImpliment {
     
-    public func reconfigureSession(planeDetectionMode: PlaneDetection?, runOptions: ARSession.RunOptions?, debugOptions: DebugOptions?) {
+    public func reconfigureSession(isPeopleOcclusion: Bool?, planeDetectionMode: PlaneDetection?, runOptions: ARSession.RunOptions?, debugOptions: DebugOptions?) {
         
-        if planeDetectionMode != nil || runOptions != nil {
+        if isPeopleOcclusion != nil || planeDetectionMode != nil || runOptions != nil {
             self.pauseSession()
+            
+            // Set people occlusion.
+            if let isPeopleOcclusion = isPeopleOcclusion {
+                self.isPeopleOcclusion = isPeopleOcclusion
+            }
             
             // Set PlaneDetection mode.
             if let planeDetectionMode = planeDetectionMode {
                 self.planeDetectionMode = planeDetectionMode
-                self.arSessionConfiguration.planeDetection = self.planeDetectionMode
             }
+            
+            self.arSessionConfiguration  = ARWorldTrackingConfiguration()
+            
             // Re-run with runOptions.
             self.arSession.run(self.arSessionConfiguration, options: runOptions ?? [])
         }
