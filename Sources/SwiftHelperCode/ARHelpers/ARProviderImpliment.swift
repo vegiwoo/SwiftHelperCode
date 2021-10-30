@@ -40,7 +40,7 @@ public final class ARProviderImpliment: NSObject, ARProvider {
     /// Subscribers for loading entities.
     var loadingStreams: [AnyCancellable] = .init()
     
-    public init(planeDetectionMode: PlaneDetection, debugOptions: DebugOptions, isPeopleOcclusion: Bool) {
+    public init(planeDetectionMode: PlaneDetection, debugOptions: DebugOptions, isPeopleOcclusion: Bool, arSessionDelegate: ARSessionDelegate) {
         // Assign people occlusion.
         self.isPeopleOcclusion = isPeopleOcclusion
         // Assign debugOptions.
@@ -54,6 +54,8 @@ public final class ARProviderImpliment: NSObject, ARProvider {
         arSession.run(arSessionConfiguration, options: [.resetTracking, .removeExistingAnchors])
  
         super.init()
+        
+        arSession.delegate = arSessionDelegate
         
         #if DEBUG
         print("[ARProvider]: Initialized.")

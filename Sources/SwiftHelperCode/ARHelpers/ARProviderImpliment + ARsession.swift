@@ -8,11 +8,7 @@ import ARKit
 /// - Work with ARSession.
 @available (iOS 14.0, *)
 extension ARProviderImpliment {
-    
-    public func append(delegate: ARSessionDelegate) {
-        self.arSession.delegate = delegate
-    }
-    
+
     public func reconfigureSession(isPeopleOcclusion: Bool?, planeDetectionMode: PlaneDetection?, runOptions: ARSession.RunOptions?, debugOptions: DebugOptions?) {
         
         if isPeopleOcclusion != nil || planeDetectionMode != nil || runOptions != nil {
