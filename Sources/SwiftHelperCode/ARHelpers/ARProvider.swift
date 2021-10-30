@@ -8,6 +8,7 @@ import ARKit
 import RealityKit
 
 public typealias PlaneDetection = ARWorldTrackingConfiguration.PlaneDetection
+public typealias DebugOptions = ARView.DebugOptions
 
 /// Protocol for working with ARKit.ARSession.
 ///
@@ -19,10 +20,22 @@ public protocol ARProvider {
     /// An ARSession instance.
     var arSession: ARSession { get }
     /// Plane detection mode.
-    var planeDetection: PlaneDetection { get }
+    var planeDetectionMode: PlaneDetection { get }
+    /// Delegate for ARSession.
+    var arSesionDelegate: ARSessionDelegate? { get set }
+    /// Debug options for ARView.
+    var debugOptions: ARView.DebugOptions { get }
+    
     // MARK: - Work with ARSession.
-    /// Adds a delegate for ArSession.
-    func append(arSessionDelegate: ARSessionDelegate)
+    /// Reconfigures session.
+    /// - Parameters:
+    ///   - planeDetectionMode: Mode for PlaneDetection (optional).
+    ///   - runOptions: Re-run options for ARSession (optional).
+    ///   - debugOptions: De
+    func reconfigureSession(planeDetectionMode: PlaneDetection?, runOptions: ARSession.RunOptions?, debugOptions: DebugOptions?)
+    /// Pauses session.
+    func pauseSession()
+    
     // MARK: - Work with files.
     /// Generates a URL to download the '* .reality' file.
     ///
@@ -54,54 +67,5 @@ public protocol ARProvider {
     ///   - fileURL: URL of file.
     /// - Returns: ModelEntity (optional) or error (as publisher).
     func loadModelEntityAsync(filename: String, fileURL: URL?) -> AnyPublisher<ModelEntity?, Error>
-}
-
-/// Class for working with ARKit.ARSession.
-///
-/// - Implements ARProvider protocol.
-@available (iOS 14.0, *)
-public final class ARProviderImpliment: NSObject, ARProvider {
-    
-    // MARK: - Variables and constants.
-    public let arSessionConfiguration: ARWorldTrackingConfiguration
-    public let arSession: ARSession
-    weak var arSesionDelegate: ARSessionDelegate?
-    public let planeDetection: PlaneDetection
-    
-    /// Subscribers for loading entities.
-    var loadingStreams: [AnyCancellable] = .init()
-    
-    public init(peopleOcclusionIsEnabled: Bool,
-                planeDetection: PlaneDetection) {
-        // Make ARWorldTrackingConfiguration.
-        arSessionConfiguration = .init()
-        arSessionConfiguration.isCollaborationEnabled = true
-        arSessionConfiguration.isLightEstimationEnabled = true
-        arSessionConfiguration.environmentTexturing = .automatic
-        if peopleOcclusionIsEnabled,
-            ARWorldTrackingConfiguration.supportsFrameSemantics(.personSegmentationWithDepth) {
-            arSessionConfiguration.frameSemantics.insert(.personSegmentationWithDepth)
-        }
-        if ARWorldTrackingConfiguration.supportsSceneReconstruction(.mesh) {
-            arSessionConfiguration.sceneReconstruction = .mesh
-        }
-        self.planeDetection = planeDetection
-        arSessionConfiguration.planeDetection = self.planeDetection
-        // Make and run ARSession.
-        arSession = .init()
-        arSession.run(arSessionConfiguration, options: [.resetTracking, .removeExistingAnchors])
-        
-        super.init()
-        
-        #if DEBUG
-        print("[ARProvider]: Initialized.")
-        #endif
-    }
-    
-    deinit {
-        #if DEBUG
-        print("[ARProvider]: Deinitialized.")
-        #endif
-    }
 }
 #endif
