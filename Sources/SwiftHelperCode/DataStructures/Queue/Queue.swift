@@ -1,7 +1,6 @@
 //  Queue.swift
 //  Created by Dmitry Samartcev on 28.07.2021.
 
-
 import Foundation
 /// Queue
 /// TODO: Исправитиь гонку состояний, ввести режим отображения/скрытия лога.
@@ -16,22 +15,32 @@ public class Queue<T> : CustomStringConvertible where T: Equatable & Identifiabl
     public var isEmpty: Bool { list.isEmpty }
     /// Number of items in a queue.
     public var count: Int { list.count }
+    /// Flag for specifying provision of a report on  operation of queue in console.
+    private var isProvideReport: Bool
+    
     // MARK: - Initialization.
-    public init(queue: DispatchQueue = DispatchQueue.global(qos: .userInitiated)) {
+    public init(queue: DispatchQueue = DispatchQueue.global(qos: .utility), isProvideReport: Bool = false) {
         self.queue = queue
+        self.isProvideReport = isProvideReport
     }
     // MARK: - Functionality
     /// Queuing method.
     /// - Parameter element: Element to enqueue.
-    public func enqueue (element: T) {
+    public func enqueue (element: T, competion: (() -> Void)? = nil) {
         let workItem = DispatchWorkItem { [weak self] in
             self?.list.push(value: element)
         }
         queue.sync(execute: workItem)
-        workItem.notify(queue: queue) {
-            #if DEBUG
-            print("👯‍♀️ Element with ID '\(element.id)' has been added to queue.\nThere are '\(self.count)' elements left in queue.")
-            #endif
+        workItem.notify(queue: queue) {[weak self] in
+            if ((self?.isProvideReport) != nil) {
+                #if DEBUG
+                print("👯‍♀️ Element with ID '\(element.id)' has been added to queue.\nThere are '\(String(describing: self?.count))' elements left in queue.")
+                #endif
+            }
+            
+            if let competion = competion {
+                competion()
+            }
         }
     }
     /// Method for removing an item from queue.
@@ -40,24 +49,17 @@ public class Queue<T> : CustomStringConvertible where T: Equatable & Identifiabl
     /// - Returns: Removed item (optional).
     public func dequeue() -> T? {
         var element: T?
-//        let workItem = DispatchWorkItem {[weak self] in
-//            element = self?.list.popHead()
-//        }
-        queue.sync(flags: .barrier) {
-            element = list.popHead()
-            if let id = element?.id {
+        let workItem = DispatchWorkItem {[weak self] in
+            element = self?.list.popHead()
+        }
+        queue.sync(execute: workItem)
+        workItem.notify(queue: queue){[weak self] in
+            if let id = element?.id, ((self?.isProvideReport) != nil) {
                 #if DEBUG
-                print("👯‍♀️ Element with ID '\(id)' is taken from queue.\nThere are '\(self.count)' elements left in messageQueue.")
+                print("👯‍♀️ Element with ID '\(id)' is taken from queue.\nThere are '\(String(describing: self?.count))' elements left in messageQueue.")
                 #endif
             }
         }
-//        workItem.notify(queue: queue) {
-//            if let id = element?.id {
-//                #if DEBUG
-//                print("👯‍♀️ Element with ID '\(id)' is taken from queue.\nThere are '\(self.count)' elements left in messageQueue.")
-//                #endif
-//            }
-//        }
         return element
     }
     /// Method for viewing first item in queue.

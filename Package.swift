@@ -5,7 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "SwiftHelperCode",
-    platforms: [.iOS(.v13),.macOS(.v10_15)],
+    platforms: [.iOS(.v13)],
     products: [
         .library( name: "SwiftHelperCode", targets: ["SwiftHelperCode"]),
     ],
