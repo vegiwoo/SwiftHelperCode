@@ -32,9 +32,9 @@ public class Queue<T> : CustomStringConvertible where T: Equatable & Identifiabl
         }
         queue.sync(execute: workItem)
         workItem.notify(queue: queue) {[weak self] in
-            if ((self?.isProvideReport) != nil) {
+            if let self = self, self.isProvideReport {
                 #if DEBUG
-                print("👯‍♀️ Element with ID '\(element.id)' has been added to queue.\nThere are '\(String(describing: self?.count))' elements left in queue.")
+                print("👯‍♀️ Element with ID '\(element.id)' has been added to queue.\nThere are '\(String(describing: self.count))' elements left in queue.")
                 #endif
             }
             
@@ -54,9 +54,9 @@ public class Queue<T> : CustomStringConvertible where T: Equatable & Identifiabl
         }
         queue.sync(execute: workItem)
         workItem.notify(queue: queue){[weak self] in
-            if let id = element?.id, ((self?.isProvideReport) != nil) {
+            if let id = element?.id, let self = self, self.isProvideReport {
                 #if DEBUG
-                print("👯‍♀️ Element with ID '\(id)' is taken from queue.\nThere are '\(String(describing: self?.count))' elements left in messageQueue.")
+                print("👯‍♀️ Element with ID '\(id)' is taken from queue.\nThere are '\(String(describing: self.count))' elements left in messageQueue.")
                 #endif
             }
         }
