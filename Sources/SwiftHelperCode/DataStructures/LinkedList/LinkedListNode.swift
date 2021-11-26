@@ -3,7 +3,7 @@
 
 import Foundation
 /// Node for linked list
-public class LinkedListNode<T> where T: Equatable {
+public class LinkedListNode<T>: Identifiable where T: Equatable {
     public var id: UUID
     public var value: T
     public var next: LinkedListNode?

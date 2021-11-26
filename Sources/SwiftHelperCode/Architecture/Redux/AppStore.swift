@@ -11,6 +11,7 @@ import Combine
 #if canImport(SwiftUI)
 
 @available(iOS 13.0, *)
+@available (macOS 10.15, *)
 public final class AppStore<State, Action>: ObservableObject {
     @Published public private(set) var state: State
 
@@ -72,6 +73,7 @@ public final class AppStore<State, Action>: ObservableObject {
     }
 }
 
+@available (macOS 10.15, *)
 public extension AppStore {
     func binding<Value>(for keyPath: KeyPath<State, Value>,
                         toAction: @escaping (Value) -> Action) -> Binding<Value> {

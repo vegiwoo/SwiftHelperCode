@@ -4,6 +4,7 @@
 #if canImport(Combine)
 import Combine
 
+@available (macOS 10.15, *)
 public extension Publishers {
     struct ZipMany<Element, F: Error>: Publisher {
         public typealias Output = [Element]

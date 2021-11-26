@@ -1,14 +1,16 @@
 //  Queue.swift
 //  Created by Dmitry Samartcev on 28.07.2021.
 
+#if canImport(Combine)
 import Foundation
+import Combine
+import Accessibility
+
 /// Queue
-/// TODO: Исправитиь гонку состояний, ввести режим отображения/скрытия лога.
-public class Queue<T> : CustomStringConvertible where T: Equatable & Identifiable {
-    /// DispatchQueue for working with the queue
-    private var queue: DispatchQueue
+@available (iOS 13.0, macOS 10.15, *)
+public class Queue<Value: Equatable & Identifiable> : CustomStringConvertible {
     /// LinkedList
-    private var list: LinkedList<T> = .init()
+    private var list: LinkedList<Value> = .init()
     /// Returns a description of values of all nodes in йueue.
     public var description: String { list.description }
     /// Checking a queue for elements.
@@ -19,50 +21,49 @@ public class Queue<T> : CustomStringConvertible where T: Equatable & Identifiabl
     private var isProvideReport: Bool
     
     // MARK: - Initialization.
-    public init(queue: DispatchQueue = DispatchQueue.global(qos: .utility), isProvideReport: Bool = false) {
-        self.queue = queue
+    public init(isProvideReport: Bool = false) {
         self.isProvideReport = isProvideReport
     }
     // MARK: - Functionality
     /// Queuing method.
     /// - Parameter element: Element to enqueue.
-    public func enqueue (element: T, competion: (() -> Void)? = nil) {
-        let workItem = DispatchWorkItem { [weak self] in
-            self?.list.push(value: element)
-        }
-        queue.sync(execute: workItem)
-        workItem.notify(queue: queue) {[weak self] in
-            if let self = self, self.isProvideReport {
+    public func enqueue (_ element: Value) -> AnyPublisher<Bool, Never> {
+        list.push(value: element)
+            .map{node in
+                assert(node.value == element)
+                return true
+            }
+            .handleEvents(receiveOutput: {[weak self] flag in
+                if let isProvideReport = self?.isProvideReport, isProvideReport {
                 #if DEBUG
-                print("👯‍♀️ Element with ID '\(element.id)' has been added to queue.\nThere are '\(String(describing: self.count))' elements left in queue.")
+                print("👯‍♂️ Element with ID '\(element.id)' has been added to queue.\nThere are '\(String(describing: self?.count))' elements left in queue.")
                 #endif
-            }
-            
-            if let competion = competion {
-                competion()
-            }
-        }
+                }
+            })
+            .receive(on: list.linkedListQueue, options: nil)
+            .eraseToAnyPublisher()
     }
+    
     /// Method for removing an item from queue.
     ///
     /// Removes first element of the linked list (head of linkin list).
     /// - Returns: Removed item (optional).
-    public func dequeue() -> T? {
-        var element: T?
-        let workItem = DispatchWorkItem {[weak self] in
-            element = self?.list.popHead()
-        }
-        queue.sync(execute: workItem)
-        workItem.notify(queue: queue){[weak self] in
-            if let id = element?.id, let self = self, self.isProvideReport {
-                #if DEBUG
-                print("👯‍♀️ Element with ID '\(id)' is taken from queue.\nThere are '\(String(describing: self.count))' elements left in messageQueue.")
-                #endif
-            }
-        }
-        return element
+    public func dequeue() -> AnyPublisher<Value?, Never> {
+        list.popHead()
+            .map{$0}
+            .handleEvents(receiveOutput: {[weak self] value in
+                if let isProvideReport = self?.isProvideReport,
+                    isProvideReport, let value = value {
+                    #if DEBUG
+                    print("👯‍♀️ Element with ID '\(value.id)' is taken from queue.\nThere are '\(String(describing: self?.count))' elements left in messageQueue.")
+                    #endif
+                }
+            })
+            .receive(on: list.linkedListQueue, options: nil)
+            .eraseToAnyPublisher()
     }
     /// Method for viewing first item in queue.
     /// - Returns: Returns first item in queue (head of linked list).
-    public func peek () -> T? { list.first?.value}
+    public func peek () -> Value? { list.first?.value}
 }
+#endif

@@ -7,6 +7,7 @@ import Foundation
 import Combine
 
 @available(iOS 13.0, *)
+@available (macOS 10.15, *)
 public struct AppReducer<State, Action, Environment> {
     public init(reduce: @escaping (inout State, Action, Environment) -> AnyPublisher<Action, Never>) {
         self.reduce = reduce

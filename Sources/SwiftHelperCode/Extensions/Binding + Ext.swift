@@ -4,6 +4,7 @@
 #if canImport(SwiftUI)
 import SwiftUI
 
+@available (macOS 10.15, *)
 public extension Binding {
     func onChange(_ handler: @escaping (Value) -> Void) -> Binding<Value> {
         return Binding(

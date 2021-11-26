@@ -3,6 +3,7 @@
 
 import Foundation
 
+@available (macOS 10.15, *)
 public extension RandomAccessCollection where Self.Element: Identifiable {
     func isLast(_ item: Element) -> Bool {
         guard isEmpty == false else {
