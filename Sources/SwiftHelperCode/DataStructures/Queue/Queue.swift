@@ -9,8 +9,10 @@ import Accessibility
 /// Queue
 @available (iOS 13.0, macOS 10.15, *)
 public class Queue<Value: Equatable & Identifiable> : CustomStringConvertible {
-    /// LinkedList
+    /// LinkedList.
     private var list: LinkedList<Value> = .init()
+    /// Dispatch queue.
+    public var queue: DispatchQueue
     /// Returns a description of values of all nodes in йueue.
     public var description: String { list.description }
     /// Checking a queue for elements.
@@ -22,6 +24,7 @@ public class Queue<Value: Equatable & Identifiable> : CustomStringConvertible {
     
     // MARK: - Initialization.
     public init(isProvideReport: Bool = false) {
+        self.queue = list.linkedListQueue
         self.isProvideReport = isProvideReport
     }
     // MARK: - Functionality
