@@ -9,7 +9,7 @@ public struct LinkedList<T>: CustomStringConvertible where T: Equatable{
     /// Tail of linked list.
     private var tail: LinkedListNode<T>?
     /// Queue for working with a linked list.
-    private let linkedListQueue: DispatchQueue = DispatchQueue(label: "LinkedListQueue", qos: .utility)
+    private let linkedListQueue: DispatchQueue = DispatchQueue.global(qos: .default)
     /// Number of items in a linked list.
     public var count: Int = 0
     /// Checking a linked list for elements.
@@ -41,7 +41,7 @@ public struct LinkedList<T>: CustomStringConvertible where T: Equatable{
     /// - Returns: New LinkedListNode.
     @discardableResult
     public mutating func push(value: T) -> LinkedListNode<T>{
-        linkedListQueue.sync(flags: .barrier) {
+        linkedListQueue.sync {
             let newNode = LinkedListNode(value: value)
             if tail != nil {
                 newNode.previous = tail
@@ -122,7 +122,7 @@ public struct LinkedList<T>: CustomStringConvertible where T: Equatable{
     /// - Parameter node: Node to remove from linked list.
     /// - Returns: Value of removed node.
     private mutating func remove(node: LinkedListNode<T>) -> T {
-        linkedListQueue.sync(flags: .barrier) {
+        linkedListQueue.sync {
             let previous = node.previous
             let next = node.next
             if let previous = previous {
@@ -160,7 +160,7 @@ public struct LinkedList<T>: CustomStringConvertible where T: Equatable{
     /// - Returns: Value of first node in linked list.
     @discardableResult
     public mutating func popToHead() -> T? {
-        linkedListQueue.sync(flags: .barrier) {
+        linkedListQueue.sync {
             guard let head = head else { return nil }
             tail?.next = nil; tail?.previous = nil
             head.next = nil; head.previous = nil
@@ -170,9 +170,8 @@ public struct LinkedList<T>: CustomStringConvertible where T: Equatable{
     }
     /// Deletes all nodes of the linked list, resetting it to zero.
     public mutating func removeAll() {
-        linkedListQueue.sync(flags: .barrier) {
+        linkedListQueue.sync {
             head = nil; tail = nil
         }
     }
 }
-
