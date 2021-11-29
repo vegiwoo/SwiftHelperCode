@@ -36,13 +36,13 @@ public class Queue<Value: Equatable & Identifiable> : CustomStringConvertible {
                 assert(node.value == element)
                 return true
             }
-            .handleEvents(receiveOutput: {[weak self] flag in
-                if let isProvideReport = self?.isProvideReport, isProvideReport {
-                #if DEBUG
-                print("👯‍♂️ Element with ID '\(element.id)' has been added to queue.\nThere are '\(String(describing: self?.count))' elements left in queue.")
-                #endif
-                }
-            })
+//            .handleEvents(receiveOutput: {[weak self] flag in
+//                if let isProvideReport = self?.isProvideReport, isProvideReport {
+//                #if DEBUG
+//                print("👯‍♂️ Element with ID '\(element.id)' has been added to queue.\nThere are '\(String(describing: self?.count))' elements left in queue.")
+//                #endif
+//                }
+//            })
             .receive(on: list.linkedListQueue, options: nil)
             .eraseToAnyPublisher()
     }
@@ -54,14 +54,14 @@ public class Queue<Value: Equatable & Identifiable> : CustomStringConvertible {
     public func dequeue() -> AnyPublisher<Value?, Never> {
         list.popHead()
             .map{$0}
-            .handleEvents(receiveOutput: {[weak self] value in
-                if let isProvideReport = self?.isProvideReport,
-                    isProvideReport, let value = value {
-                    #if DEBUG
-                    print("👯‍♀️ Element with ID '\(value.id)' is taken from queue.\nThere are '\(String(describing: self?.count))' elements left in messageQueue.")
-                    #endif
-                }
-            })
+//            .handleEvents(receiveOutput: {[weak self] value in
+//                if let isProvideReport = self?.isProvideReport,
+//                    isProvideReport, let value = value {
+//                    #if DEBUG
+//                    print("👯‍♀️ Element with ID '\(value.id)' is taken from queue.\nThere are '\(String(describing: self?.count))' elements left in messageQueue.")
+//                    #endif
+//                }
+//            })
             .receive(on: list.linkedListQueue, options: nil)
             .eraseToAnyPublisher()
     }

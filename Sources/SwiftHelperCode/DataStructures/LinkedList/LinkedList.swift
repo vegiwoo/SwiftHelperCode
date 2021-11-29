@@ -130,11 +130,7 @@ public class LinkedList<T>: CustomStringConvertible where T: Equatable {
     public func getValueForNode(_ id: UUID) -> AnyPublisher<T?, Never> {
         return self.getNode(id)
             .map{node -> T? in
-                if let value = node?.value {
-                    return value
-                } else {
-                    return nil
-                }
+                node?.value != nil ? node!.value : nil
             }
             .receive(on: linkedListQueue, options: nil)
             .eraseToAnyPublisher()
@@ -146,11 +142,7 @@ public class LinkedList<T>: CustomStringConvertible where T: Equatable {
     public func getNextNodeValueForNode(_ id: UUID) ->  AnyPublisher<T?, Never> {
         return self.getNode(id)
             .map{node -> T? in
-                if let node = node, let nextNode = node.next {
-                    return nextNode.value
-                } else {
-                    return nil
-                }
+               node != nil && node?.next != nil ? node?.next!.value : nil
             }
             .receive(on: linkedListQueue, options: nil)
             .eraseToAnyPublisher()
